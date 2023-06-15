@@ -6,22 +6,25 @@ tecnológica eficiente que optimice la administración y el control de tu negoci
 
 ## Requisitos previos
 
-Antes de comenzar, asegúrate de tener Docker instalado correctamente en tu PC. Docker es una herramienta que nos
-permitirá ejecutar la base de datos necesaria para el funcionamiento de nuestro sistema contable y de facturación
-electrónica.
+Antes de comenzar, asegúrate de tener el JDK 11 instalado correctamente en tu PC.
 
-## Levantar la base de datos
+## Pasos para levantar el proyecto
 
 Para levantar el proyecto, sigue estos pasos:
 
 1. Abre tu terminal o línea de comandos.
-2. Ejecuta el siguiente comando para levantar la base de datos PostgreSQL:
+2. En la base de datos local, crea una base de datos vacía con el nombre "minegocio" que el proyecto pueda utilizar.
 
-```shell
-docker run -d --name alquimiasoft -e POSTGRES_PASSWORD=postgres -p 5432:5432 -e POSTGRES_DB=minegocio postgres
-```
+   Opcionalmente, si tienes instalado Docker en tu PC, puedes ejecutar el siguiente comando para levantar una base de
+   datos PostgreSQL y utilizarla localmente:
+   ```shell
+   docker run -d --name alquimiasoft -e POSTGRES_PASSWORD=postgres -p 5432:5432 -e POSTGRES_DB=minegocio postgres
+   ```
+   Este comando creará un contenedor Docker con la base de datos necesaria para el proyecto Alquimiasoft: Mi Negocio.
 
-Este comando creará un contenedor Docker con la base de datos necesaria para el proyecto Alquimiasoft: Mi Negocio.
+3. Instala las dependencias del proyecto que se encuentran en el archivo "pom.xml".
+4. En la configuración del proyecto, asegúrate de levantarlo utilizando el archivo "application-dev.properties".
+5. Ejecuta el proyecto.
 
 ## Documentación de la API
 
@@ -32,3 +35,5 @@ sistema. Puedes acceder a la documentación de la API mediante el siguiente enla
 
 En esta documentación encontrarás ejemplos de solicitudes para diferentes endpoints de nuestra API, lo que te ayudará a
 comprender cómo interactuar con el sistema contable y de facturación electrónica.
+
+by  [efrxngg](https://efrxngg.github.io)
