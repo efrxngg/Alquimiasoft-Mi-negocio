@@ -24,7 +24,7 @@ public class AddressEntity {
     private String address;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private ClientEntity clientEntity;
+    private CustomerEntity clientEntity;
 
     public AddressEntity() {
 

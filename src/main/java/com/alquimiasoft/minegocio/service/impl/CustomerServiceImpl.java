@@ -1,8 +1,8 @@
 package com.alquimiasoft.minegocio.service.impl;
 
-import com.alquimiasoft.minegocio.entity.ClientEntity;
-import com.alquimiasoft.minegocio.repository.IClientRepository;
-import com.alquimiasoft.minegocio.service.ClientService;
+import com.alquimiasoft.minegocio.entity.CustomerEntity;
+import com.alquimiasoft.minegocio.repository.CustomerRepository;
+import com.alquimiasoft.minegocio.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,12 +10,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CustomerServiceImpl implements ClientService {
+public class CustomerServiceImpl implements CustomerService {
 
-    private final IClientRepository clientRepository;
+    private final CustomerRepository clientRepository;
 
     @Override
-    public List<ClientEntity> findAllCustomerstByIdentityNumberOrName(String identityNumber, String name) {
+    public List<CustomerEntity> findAllCustomerstByIdentityNumberOrName(String identityNumber, String name) {
         return clientRepository.findAllByIdentificationNumberOrName(identityNumber, name);
     }
 }

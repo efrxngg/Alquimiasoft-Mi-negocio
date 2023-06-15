@@ -1,7 +1,7 @@
 package com.alquimiasoft.minegocio.repository;
 
 import com.alquimiasoft.minegocio.entity.AddressEntity;
-import com.alquimiasoft.minegocio.entity.ClientEntity;
+import com.alquimiasoft.minegocio.entity.CustomerEntity;
 import com.alquimiasoft.minegocio.entity.IdentificationType;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
@@ -21,20 +21,20 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 @ActiveProfiles("dev")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class ClienteRepositoryTest {
+class CustomerRepositoryTest {
 
     @Autowired
     private TestEntityManager entityManager;
 
     @Autowired
-    private IClientRepository clientRepository;
+    private CustomerRepository clientRepository;
 
     /**
      * Funcionalidad para buscar y obtener un listado de clientes.
      */
     @Test
     void testFindByIdentificationNumberOrName() {
-        var client = ClientEntity.builder()
+        var client = CustomerEntity.builder()
                 .firstName("Efren").lastName("Galarza")
                 .email("efren@test.com")
                 .cellphone("099718800")
@@ -42,7 +42,7 @@ class ClienteRepositoryTest {
                 .identificationNumber("0954943122")
                 .build();
         entityManager.persist(client);
-        List<ClientEntity> clients = Collections.emptyList();
+        List<CustomerEntity> clients = Collections.emptyList();
         clients.forEach(c -> log.info(" Client Result: {}", c));
 
         assertThat(clients).hasSize(1);
@@ -56,7 +56,7 @@ class ClienteRepositoryTest {
         var address = AddressEntity.builder()
                 .province("Guayas").city("Guayaquil").address("M-x Sl-x")
                 .build();
-        var client = ClientEntity.builder()
+        var client = CustomerEntity.builder()
                 .firstName("Efren").lastName("Galarza")
                 .email("efren@test.com")
                 .cellphone("099718800")
@@ -64,7 +64,7 @@ class ClienteRepositoryTest {
                 .identificationNumber("0954943122")
                 .mainAddress(address)
                 .build();
-        ClientEntity clientResult = ClientEntity.builder().build();
+        CustomerEntity clientResult = CustomerEntity.builder().build();
         log.info("Client Result: {}", clientResult);
 
         assertThat(clientResult).hasFieldOrPropertyWithValue("identificationNumber", "0954943122");
@@ -78,7 +78,7 @@ class ClienteRepositoryTest {
         var address = AddressEntity.builder()
                 .province("Guayas").city("Guayaquil").address("M-x Sl-x")
                 .build();
-        var client = ClientEntity.builder()
+        var client = CustomerEntity.builder()
                 .firstName("Efren").lastName("Galarza")
                 .email("efren@test.com")
                 .cellphone("099718800")
@@ -86,7 +86,7 @@ class ClienteRepositoryTest {
                 .identificationNumber("0954943122")
                 .mainAddress(address)
                 .build();
-        ClientEntity clientResult = ClientEntity.builder().build();
+        CustomerEntity clientResult = CustomerEntity.builder().build();
         log.info("Client Result: {}", clientResult);
 
         clientRepository.deleteById(clientResult.getId());
@@ -96,14 +96,14 @@ class ClienteRepositoryTest {
 
     @Test
     void testSaveClient() {
-        var client = ClientEntity.builder()
+        var client = CustomerEntity.builder()
                 .firstName("Efren").lastName("Galarza")
                 .email("efren@test.com")
                 .cellphone("099718800")
                 .identificationType(IdentificationType.CED)
                 .identificationNumber("0954943122")
                 .build();
-        ClientEntity clientResult = ClientEntity.builder().build();
+        CustomerEntity clientResult = CustomerEntity.builder().build();
         log.info("Client Result: {}", clientResult);
 
         assertThat(clientResult).hasFieldOrPropertyWithValue("identificationNumber", "0954943122");
@@ -114,7 +114,7 @@ class ClienteRepositoryTest {
         var address = AddressEntity.builder()
                 .province("Guayas").city("Guayaquil").address("M-x Sl-x")
                 .build();
-        var client = ClientEntity.builder()
+        var client = CustomerEntity.builder()
                 .firstName("Efren").lastName("Galarza")
                 .email("efren@test.com")
                 .cellphone("099718800")
@@ -123,14 +123,14 @@ class ClienteRepositoryTest {
                 .mainAddress(address)
                 .build();
         entityManager.persist(client);
-        List<ClientEntity> clients = Collections.emptyList();
+        List<CustomerEntity> clients = Collections.emptyList();
 
         assertThat(clients).hasSize(1);
     }
 
     @Test
     void testFindByIdentificationNumberOrNameWitoutName() {
-        var client = ClientEntity.builder()
+        var client = CustomerEntity.builder()
                 .firstName("Efren").lastName("Galarza")
                 .email("efren@test.com")
                 .cellphone("099718800")
@@ -138,7 +138,7 @@ class ClienteRepositoryTest {
                 .identificationNumber("0954943122")
                 .build();
         entityManager.persist(client);
-        List<ClientEntity> clients = Collections.emptyList();
+        List<CustomerEntity> clients = Collections.emptyList();
         clients.forEach(c -> log.info(" Client Result: {}", c));
 
         assertThat(clients).hasSize(1);
@@ -146,7 +146,7 @@ class ClienteRepositoryTest {
 
     @Test
     void testFindByIdentificationNumberOrNameWithoutIdentificationNumber() {
-        var client = ClientEntity.builder()
+        var client = CustomerEntity.builder()
                 .firstName("Efren").lastName("Galarza")
                 .email("efren@test.com")
                 .cellphone("099718800")
@@ -154,7 +154,7 @@ class ClienteRepositoryTest {
                 .identificationNumber("0954943122")
                 .build();
         entityManager.persist(client);
-        List<ClientEntity> clients = Collections.emptyList();
+        List<CustomerEntity> clients = Collections.emptyList();
         clients.forEach(c -> log.info(" Client Result: {}", c));
 
         assertThat(clients).hasSize(1);

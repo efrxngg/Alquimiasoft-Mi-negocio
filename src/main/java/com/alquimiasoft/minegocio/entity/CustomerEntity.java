@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "client_entity")
+@Table(name = "customer_entity")
 @AllArgsConstructor
 @Data
 @Builder
-public class ClientEntity {
+public class CustomerEntity {
     @Id
     @GeneratedValue
     private UUID id;
@@ -38,7 +38,7 @@ public class ClientEntity {
     @OneToMany
     private List<AddressEntity> addresses;
 
-    public ClientEntity() {
+    public CustomerEntity() {
 
     }
 

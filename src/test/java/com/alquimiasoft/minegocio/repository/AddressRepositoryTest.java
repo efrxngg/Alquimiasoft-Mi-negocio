@@ -18,10 +18,10 @@ class AddressRepositoryTest {
     private TestEntityManager entityManager;
 
     @Autowired
-    private IAddressRepository addressRepository;
+    private AddressRepository addressRepository;
 
     @Autowired
-    private IClientRepository clientRepository;
+    private CustomerRepository clientRepository;
 
     /**
      * Funcionalidad para registrar una nueva dirección por cliente
