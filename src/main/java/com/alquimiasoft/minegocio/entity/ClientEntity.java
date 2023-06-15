@@ -32,7 +32,7 @@ public class ClientEntity {
 
     private String cellphone;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private AddressEntity mainAddress;
 
     @OneToMany
