@@ -5,11 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 public interface IClientRepository extends JpaRepository<ClientEntity, UUID> {
-    @Query(value = "SELECT * FROM client_entity WHERE identificationNumber = :identification OR CONCAT(firstName, lastName) = :name", nativeQuery = true)
-    Optional<ClientEntity> findByIdentificationNumberOrName(@Param("identification") String identification, @Param("name") String name);
+    @Query(value = "SELECT * FROM client_entity WHERE identificationNumber = :identificationNumber OR CONCAT(firstName, lastName) = :name", nativeQuery = true)
+    List<ClientEntity> findAllByIdentificationNumberOrName(@Param("identificationNumber") String identificationNumber, @Param("name") String name);
 
 }
