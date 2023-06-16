@@ -27,137 +27,113 @@ class CustomerRepositoryTest {
     private TestEntityManager entityManager;
 
     @Autowired
-    private CustomerRepository clientRepository;
+    private CustomerRepository customerRepository;
 
     /**
-     * Funcionalidad para buscar y obtener un listado de clientes.
+     * Funcionalidad para buscar y obtener un listado de customeres.
      */
     @Test
     void testFindByIdentificationNumberOrName() {
-        var client = CustomerEntity.builder()
-                .firstName("Efren").lastName("Galarza")
-                .email("efren@test.com")
-                .cellphone("099718800")
-                .identificationType(IdentificationType.CED)
-                .identificationNumber("0954943122")
-                .build();
-        entityManager.persist(client);
-        List<CustomerEntity> clients = Collections.emptyList();
-        clients.forEach(c -> log.info(" Client Result: {}", c));
+        CustomerEntity customer = getCustomerEntity();
+        entityManager.persist(customer);
+        List<CustomerEntity> customers = customerRepository.findAllByIdentificationNumberOrName("0954943122", "Efren Galarza");
+        customers.forEach(c -> log.info(" Customer Result: {}", c));
 
-        assertThat(clients).hasSize(1);
+        assertThat(customers).hasSize(1);
     }
 
     /**
-     * Funcionalidad para crear un nuevo cliente con la dirección matriz
+     * Funcionalidad para crear un nuevo customere con la dirección matriz
      */
     @Test
-    void testSaveClientWithAddress() {
-        var address = AddressEntity.builder()
-                .province("Guayas").city("Guayaquil").address("M-x Sl-x")
-                .build();
-        var client = CustomerEntity.builder()
-                .firstName("Efren").lastName("Galarza")
-                .email("efren@test.com")
-                .cellphone("099718800")
-                .identificationType(IdentificationType.CED)
-                .identificationNumber("0954943122")
-                .mainAddress(address)
-                .build();
-        CustomerEntity clientResult = CustomerEntity.builder().build();
-        log.info("Client Result: {}", clientResult);
+    void testSaveCustomerWithAddress() {
+        CustomerEntity customer = getCustomerEntity();
+        CustomerEntity customerResult = entityManager.persist(customer);
+        log.info("Customer Result: {}", customerResult);
 
-        assertThat(clientResult).hasFieldOrPropertyWithValue("identificationNumber", "0954943122");
+        assertThat(customerResult).hasFieldOrPropertyWithValue("identificationNumber", "0954943122");
     }
 
     /**
-     * Funcionalidad para eliminar un cliente
+     * Funcionalidad para eliminar un customere
      */
     @Test
-    void testDeleteClient() {
-        var address = AddressEntity.builder()
-                .province("Guayas").city("Guayaquil").address("M-x Sl-x")
-                .build();
-        var client = CustomerEntity.builder()
-                .firstName("Efren").lastName("Galarza")
-                .email("efren@test.com")
-                .cellphone("099718800")
-                .identificationType(IdentificationType.CED)
-                .identificationNumber("0954943122")
-                .mainAddress(address)
-                .build();
-        CustomerEntity clientResult = CustomerEntity.builder().build();
-        log.info("Client Result: {}", clientResult);
+    void testDeleteCustomer() {
+        var customer = getCustomerEntity();
+        CustomerEntity customerResult = entityManager.persist(customer);
+        log.info("Customer Result: {}", customerResult);
 
-        clientRepository.deleteById(clientResult.getId());
-        boolean exists = clientRepository.existsById(clientResult.getId());
+        customerRepository.deleteById(customerResult.getId());
+        boolean exists = customerRepository.existsById(customerResult.getId());
         assertFalse(exists);
     }
 
+    /**
+     * Funcionalidad para listar las direcciones adicionales del cliente
+     */
     @Test
-    void testSaveClient() {
-        var client = CustomerEntity.builder()
-                .firstName("Efren").lastName("Galarza")
-                .email("efren@test.com")
-                .cellphone("099718800")
-                .identificationType(IdentificationType.CED)
-                .identificationNumber("0954943122")
-                .build();
-        CustomerEntity clientResult = CustomerEntity.builder().build();
-        log.info("Client Result: {}", clientResult);
+    void testFindAllAddressByClient() {
+        CustomerEntity customer = getCustomerEntity();
+        CustomerEntity customerResult = entityManager.persist(customer);
+        log.info("Customer Result: {}", customerResult);
 
-        assertThat(clientResult).hasFieldOrPropertyWithValue("identificationNumber", "0954943122");
+        List<AddressEntity> addresses = customerRepository.findById(customerResult.getId())
+                .map(CustomerEntity::getAddresses).orElse(Collections.emptyList());
+        assertThat(addresses).hasSize(1);
+    }
+
+    @Test
+    void testSaveCustomer() {
+        CustomerEntity customer = getCustomerEntity();
+        CustomerEntity customerResult = entityManager.persist(customer);
+        log.info("Customer Result: {}", customerResult);
+
+        assertThat(customerResult).hasFieldOrPropertyWithValue("identificationNumber", "0954943122");
     }
 
     @Test
     void testFindAll() {
-        var address = AddressEntity.builder()
-                .province("Guayas").city("Guayaquil").address("M-x Sl-x")
-                .build();
-        var client = CustomerEntity.builder()
-                .firstName("Efren").lastName("Galarza")
-                .email("efren@test.com")
-                .cellphone("099718800")
-                .identificationType(IdentificationType.CED)
-                .identificationNumber("0954943122")
-                .mainAddress(address)
-                .build();
-        entityManager.persist(client);
-        List<CustomerEntity> clients = Collections.emptyList();
+        CustomerEntity customer = getCustomerEntity();
+        entityManager.persist(customer);
+        List<CustomerEntity> customers = customerRepository.findAll();
 
-        assertThat(clients).hasSize(1);
+        assertThat(customers).hasSize(1);
     }
 
     @Test
     void testFindByIdentificationNumberOrNameWitoutName() {
-        var client = CustomerEntity.builder()
-                .firstName("Efren").lastName("Galarza")
-                .email("efren@test.com")
-                .cellphone("099718800")
-                .identificationType(IdentificationType.CED)
-                .identificationNumber("0954943122")
-                .build();
-        entityManager.persist(client);
-        List<CustomerEntity> clients = Collections.emptyList();
-        clients.forEach(c -> log.info(" Client Result: {}", c));
+        CustomerEntity customer = getCustomerEntity();
+        entityManager.persist(customer);
+        List<CustomerEntity> customers = customerRepository
+                .findAllByIdentificationNumberOrName("0954943122", null);
+        customers.forEach(c -> log.info(" Customer Result: {}", c));
 
-        assertThat(clients).hasSize(1);
+        assertThat(customers).hasSize(1);
     }
 
     @Test
     void testFindByIdentificationNumberOrNameWithoutIdentificationNumber() {
-        var client = CustomerEntity.builder()
+        CustomerEntity customer = getCustomerEntity();
+        entityManager.persist(customer);
+        List<CustomerEntity> customers = customerRepository
+                .findAllByIdentificationNumberOrName(null, "Efren Galarza");
+        customers.forEach(c -> log.info(" Customer Result: {}", c));
+
+        assertThat(customers).hasSize(1);
+    }
+
+    private static CustomerEntity getCustomerEntity() {
+        var address = AddressEntity.builder()
+                .province("Guayas").city("Guayaquil").address("M-x Sl-x")
+                .build();
+        return CustomerEntity.builder()
                 .firstName("Efren").lastName("Galarza")
                 .email("efren@test.com")
                 .cellphone("099718800")
                 .identificationType(IdentificationType.CED)
                 .identificationNumber("0954943122")
+                .addresses(List.of(address))
+                .mainAddress(address)
                 .build();
-        entityManager.persist(client);
-        List<CustomerEntity> clients = Collections.emptyList();
-        clients.forEach(c -> log.info(" Client Result: {}", c));
-
-        assertThat(clients).hasSize(1);
     }
-
 }

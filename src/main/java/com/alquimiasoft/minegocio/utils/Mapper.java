@@ -1,5 +1,7 @@
 package com.alquimiasoft.minegocio.utils;
 
+import com.alquimiasoft.minegocio.dto.AddressCreateDTO;
+import com.alquimiasoft.minegocio.dto.AddressUpdateDTO;
 import com.alquimiasoft.minegocio.dto.CustomerCreateDTO;
 import com.alquimiasoft.minegocio.dto.CustomerDTO;
 import com.alquimiasoft.minegocio.entity.AddressEntity;
@@ -38,4 +40,19 @@ public class Mapper {
                 .build();
     }
 
+    public static AddressEntity toAddressEntity(AddressCreateDTO address) {
+        return AddressEntity.builder()
+                .province(address.getProvince())
+                .city(address.getCity())
+                .address(address.getAddress())
+                .build();
+    }
+
+    public static AddressUpdateDTO toAddressUpdateDTO(AddressEntity addressEntity) {
+        return AddressUpdateDTO.builder()
+                .province(addressEntity.getProvince())
+                .city(addressEntity.getCity())
+                .address(addressEntity.getAddress())
+                .build();
+    }
 }
