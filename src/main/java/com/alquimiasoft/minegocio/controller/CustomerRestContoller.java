@@ -25,10 +25,14 @@ public class CustomerRestContoller {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<CustomerDTO>> findAllCustomersByIDNumberOrName(@RequestParam String identificationNumber, @RequestParam String name) {
-        var customerDTOS = customerService.findAllCustomerstByIdentityNumberOrName(identificationNumber, name);
+    public ResponseEntity<List<CustomerDTO>> findAllCustomersByIDNumberOrName(
+            @RequestParam(required = false) String identificationNumber,
+            @RequestParam(required = false) String name) {
+        List<CustomerDTO> customerDTOS = customerService.findAllCustomerstByIdentityNumberOrName(identificationNumber, name);
+
         if (customerDTOS.isEmpty())
             return noContent().build();
+
         return ok().body(customerDTOS);
     }
 }
