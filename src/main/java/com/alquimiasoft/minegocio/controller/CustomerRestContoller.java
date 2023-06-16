@@ -1,7 +1,6 @@
 package com.alquimiasoft.minegocio.controller;
 
-import com.alquimiasoft.minegocio.dto.CustomerCreateDTO;
-import com.alquimiasoft.minegocio.dto.CustomerDTO;
+import com.alquimiasoft.minegocio.dto.*;
 import com.alquimiasoft.minegocio.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,5 +33,34 @@ public class CustomerRestContoller {
             return noContent().build();
 
         return ok().body(customerDTOS);
+    }
+
+    @PutMapping("/{id}/addresses")
+    public ResponseEntity<ResponseMessage<AddressUpdateDTO>> updateAddresses(@PathVariable String id, @RequestBody AddressCreateDTO addressCreateDTO) {
+        var addressUpdateDTO = customerService.saveNewAddressForCustomer(id, addressCreateDTO);
+        return ok().body(new ResponseMessage<>("¡Dirección registrada exitosamente!", addressUpdateDTO));
+    }
+
+    @PutMapping("/only")
+    public ResponseEntity<CustomerDTO> updateCustomer(@RequestBody CustomerUpdateDTO customerUpdateDTO) {
+        return ok().body(customerService.updateCustomerInformationOnly(customerUpdateDTO));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ResponseMessage<Void>> deleteCustomerById(@PathVariable String id) {
+        if (!customerService.deleteCustomerById(id))
+            return notFound().build();
+
+        return ok().body(new ResponseMessage<>("Cliente eliminado exitosamente."));
+    }
+
+    @GetMapping("/{id}/addresses")
+    public ResponseEntity<List<AddressUpdateDTO>> findAllAddressByCustomerId(@PathVariable String id) {
+        List<AddressUpdateDTO> address = customerService.findAllAddressByCustomerId(id);
+
+        if (address.isEmpty())
+            return status(HttpStatus.NOT_FOUND).build();
+
+        return ok().body(address);
     }
 }

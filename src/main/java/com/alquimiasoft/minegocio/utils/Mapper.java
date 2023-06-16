@@ -50,6 +50,7 @@ public class Mapper {
 
     public static AddressUpdateDTO toAddressUpdateDTO(AddressEntity addressEntity) {
         return AddressUpdateDTO.builder()
+                .id(addressEntity.getId().toString())
                 .province(addressEntity.getProvince())
                 .city(addressEntity.getCity())
                 .address(addressEntity.getAddress())

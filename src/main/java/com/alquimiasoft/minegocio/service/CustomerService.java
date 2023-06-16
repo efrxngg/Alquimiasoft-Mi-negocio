@@ -1,7 +1,6 @@
 package com.alquimiasoft.minegocio.service;
 
 import com.alquimiasoft.minegocio.dto.*;
-import com.alquimiasoft.minegocio.entity.CustomerEntity;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ public interface CustomerService {
 
     boolean deleteCustomerById(String id);
 
-    CustomerEntity saveNewAddressForCustomer(String id, AddressCreateDTO address);
+    AddressUpdateDTO saveNewAddressForCustomer(String id, AddressCreateDTO address);
 
     List<AddressUpdateDTO> findAllAddressByCustomerId(String id);
 }

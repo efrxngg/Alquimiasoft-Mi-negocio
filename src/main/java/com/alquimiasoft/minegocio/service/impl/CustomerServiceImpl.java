@@ -53,7 +53,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public CustomerEntity saveNewAddressForCustomer(String id, AddressCreateDTO address) {
+    public AddressUpdateDTO saveNewAddressForCustomer(String id, AddressCreateDTO address) {
         Optional<CustomerEntity> customerOptional = customerRepository.findById(UUID.fromString(id));
         CustomerEntity customerEntity = customerOptional.orElseThrow(() -> new IllegalArgumentException("Customer not found"));
 
@@ -62,7 +62,8 @@ public class CustomerServiceImpl implements CustomerService {
         addresses.add(newAddress);
 
         customerEntity.setAddresses(addresses);
-        return customerRepository.save(customerEntity);
+        customerRepository.save(customerEntity);
+        return Mapper.toAddressUpdateDTO(newAddress);
     }
 
     @Override
@@ -76,6 +77,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Transactional
     public List<AddressUpdateDTO> findAllAddressByCustomerId(String id) {
         List<AddressEntity> addresses = customerRepository.findById(UUID.fromString(id))
                 .map(CustomerEntity::getAddresses).orElse(Collections.emptyList());
