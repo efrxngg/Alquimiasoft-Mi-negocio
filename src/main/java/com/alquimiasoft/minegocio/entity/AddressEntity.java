@@ -22,10 +22,7 @@ public class AddressEntity {
     private String city;
 
     private String address;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private CustomerEntity clientEntity;
-
+    
     public AddressEntity() {
 
     }
