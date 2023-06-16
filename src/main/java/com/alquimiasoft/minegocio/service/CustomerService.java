@@ -1,9 +1,12 @@
 package com.alquimiasoft.minegocio.service;
 
-import com.alquimiasoft.minegocio.entity.CustomerEntity;
+import com.alquimiasoft.minegocio.dto.CustomerCreateDTO;
+import com.alquimiasoft.minegocio.dto.CustomerDTO;
 
 import java.util.List;
 
 public interface CustomerService {
-    List<CustomerEntity> findAllCustomerstByIdentityNumberOrName(String identityNumber, String name);
+    CustomerDTO saveCustomerWithAddress(CustomerCreateDTO customerCreateDTO);
+
+    List<CustomerDTO> findAllCustomerstByIdentityNumberOrName(String identityNumber, String name);
 }
