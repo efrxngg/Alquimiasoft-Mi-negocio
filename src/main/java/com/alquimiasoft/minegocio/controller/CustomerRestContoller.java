@@ -5,8 +5,10 @@ import com.alquimiasoft.minegocio.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.http.ResponseEntity.*;
@@ -15,18 +17,19 @@ import static org.springframework.http.ResponseEntity.*;
 @RestController
 @RequestMapping("/api/v1/customers")
 @RequiredArgsConstructor
+@Validated
 public class CustomerRestContoller {
     private final CustomerService customerService;
 
     @PostMapping
-    public ResponseEntity<CustomerDTO> saveCustomer(@RequestBody CustomerCreateDTO customerCreateDTO) {
+    public ResponseEntity<CustomerDTO> saveCustomer(@Valid @RequestBody CustomerCreateDTO customerCreateDTO) {
         return status(HttpStatus.CREATED).body(customerService.saveCustomerWithAddress(customerCreateDTO));
     }
 
     @GetMapping("/search")
     public ResponseEntity<List<CustomerDTO>> findAllCustomersByIDNumberOrName(
-            @RequestParam(required = false) String identificationNumber,
-            @RequestParam(required = false) String name) {
+            @RequestParam(required = false, defaultValue = "") String identificationNumber,
+            @RequestParam(required = false, defaultValue = "") String name) {
         List<CustomerDTO> customerDTOS = customerService.findAllCustomerstByIdentityNumberOrName(identificationNumber, name);
 
         if (customerDTOS.isEmpty())
@@ -36,13 +39,13 @@ public class CustomerRestContoller {
     }
 
     @PutMapping("/{id}/addresses")
-    public ResponseEntity<ResponseMessage<AddressUpdateDTO>> updateAddresses(@PathVariable String id, @RequestBody AddressCreateDTO addressCreateDTO) {
+    public ResponseEntity<ResponseMessage<AddressUpdateDTO>> updateAddresses(@PathVariable String id, @Valid @RequestBody AddressCreateDTO addressCreateDTO) {
         var addressUpdateDTO = customerService.saveNewAddressForCustomer(id, addressCreateDTO);
         return ok().body(new ResponseMessage<>("¡Dirección registrada exitosamente!", addressUpdateDTO));
     }
 
     @PutMapping("/only")
-    public ResponseEntity<CustomerDTO> updateCustomer(@RequestBody CustomerUpdateDTO customerUpdateDTO) {
+    public ResponseEntity<CustomerDTO> updateCustomer(@Valid @RequestBody CustomerUpdateDTO customerUpdateDTO) {
         return ok().body(customerService.updateCustomerInformationOnly(customerUpdateDTO));
     }
 

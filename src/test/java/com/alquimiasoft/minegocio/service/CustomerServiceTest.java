@@ -45,7 +45,7 @@ public class CustomerServiceTest {
         var customertUpdated = CustomerUpdateDTO.builder()
                 .id(customerResult.getId())
                 .identificationNumber("57495749574594")
-                .identificationType(IdentificationType.RUC)
+                .identificationType("RUC")
                 .firstName("Daniel")
                 .lastName("Chavez")
                 .email("daniel@test.com")

@@ -3,6 +3,7 @@ package com.alquimiasoft.minegocio.service.impl;
 import com.alquimiasoft.minegocio.dto.*;
 import com.alquimiasoft.minegocio.entity.AddressEntity;
 import com.alquimiasoft.minegocio.entity.CustomerEntity;
+import com.alquimiasoft.minegocio.entity.IdentificationType;
 import com.alquimiasoft.minegocio.repository.AddressRepository;
 import com.alquimiasoft.minegocio.repository.CustomerRepository;
 import com.alquimiasoft.minegocio.service.CustomerService;
@@ -36,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerDTO updateCustomerInformationOnly(CustomerUpdateDTO customerUpdateDTO) {
         CustomerEntity customerEntity = customerRepository.findById(UUID.fromString(customerUpdateDTO.getId())).orElseThrow();
-        customerEntity.setIdentificationType(customerUpdateDTO.getIdentificationType());
+        customerEntity.setIdentificationType(IdentificationType.fromString(customerUpdateDTO.getIdentificationType()));
         customerEntity.setIdentificationNumber(customerUpdateDTO.getIdentificationNumber());
         customerEntity.setFirstName(customerUpdateDTO.getFirstName());
         customerEntity.setLastName(customerUpdateDTO.getLastName());
