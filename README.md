@@ -36,5 +36,9 @@ sistema. Puedes acceder a la documentación de la API mediante el siguiente enla
 En esta documentación encontrarás ejemplos de solicitudes para diferentes endpoints de nuestra API, lo que te ayudará a
 comprender cómo interactuar con el sistema contable y de facturación electrónica.
 
+# Diagrama UML del proyecto
+
+![Diagrama UML](./src/main/resources/docs/uml.png)
+
 by [efrxngg](https://efrxngg.github.io)
 
