@@ -1,5 +1,6 @@
 package com.alquimiasoft.minegocio.service.impl;
 
+import com.alquimiasoft.minegocio.controller.exception.GenericNotFoundException;
 import com.alquimiasoft.minegocio.dto.*;
 import com.alquimiasoft.minegocio.entity.AddressEntity;
 import com.alquimiasoft.minegocio.entity.CustomerEntity;
@@ -36,7 +37,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDTO updateCustomerInformationOnly(CustomerUpdateDTO customerUpdateDTO) {
-        CustomerEntity customerEntity = customerRepository.findById(UUID.fromString(customerUpdateDTO.getId())).orElseThrow();
+        CustomerEntity customerEntity = customerRepository.findById(UUID.fromString(customerUpdateDTO.getId()))
+                .orElseThrow(() -> new GenericNotFoundException("No se encontró ningún cliente con el ID especificado"));
         customerEntity.setIdentificationType(IdentificationType.fromString(customerUpdateDTO.getIdentificationType()));
         customerEntity.setIdentificationNumber(customerUpdateDTO.getIdentificationNumber());
         customerEntity.setFirstName(customerUpdateDTO.getFirstName());
@@ -55,8 +57,8 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional
     public AddressUpdateDTO saveNewAddressForCustomer(String id, AddressCreateDTO address) {
-        Optional<CustomerEntity> customerOptional = customerRepository.findById(UUID.fromString(id));
-        CustomerEntity customerEntity = customerOptional.orElseThrow(() -> new IllegalArgumentException("Customer not found"));
+        var customerEntity = customerRepository.findById(UUID.fromString(id)).orElseThrow(
+                () -> new GenericNotFoundException("No se encontró ningún cliente con el ID especificado"));
 
         List<AddressEntity> addresses = new ArrayList<>(customerEntity.getAddresses());
         AddressEntity newAddress = addressRepository.save(Mapper.toAddressEntity(address));
