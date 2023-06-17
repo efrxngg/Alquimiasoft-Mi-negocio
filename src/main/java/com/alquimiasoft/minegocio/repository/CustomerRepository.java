@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.UUID;
 
 public interface CustomerRepository extends JpaRepository<CustomerEntity, UUID> {
-    @Query(value = "SELECT * FROM customer_entity WHERE identification_number = :identificationNumber OR CONCAT(first_name,' ',last_name) = :name", nativeQuery = true)
-    List<CustomerEntity> findAllByIdentificationNumberOrName(@Param("identificationNumber") String identificationNumber, @Param("name") String name);
+    @Query(value = "SELECT * FROM customer_entity WHERE identification_number = :identificationNumber OR CONCAT(first_name,' ',last_name) LIKE %:name%", nativeQuery = true)
+    List<CustomerEntity> findAllByIdentificationNumberOrName(
+            @Param("identificationNumber") String identificationNumber,
+            @Param("name") String name);
 
 }

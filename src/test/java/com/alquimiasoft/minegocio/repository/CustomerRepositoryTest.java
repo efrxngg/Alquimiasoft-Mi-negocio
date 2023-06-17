@@ -105,7 +105,7 @@ class CustomerRepositoryTest {
         CustomerEntity customer = getCustomerEntity();
         entityManager.persist(customer);
         List<CustomerEntity> customers = customerRepository
-                .findAllByIdentificationNumberOrName("0954943122", null);
+                .findAllByIdentificationNumberOrName("0954943122", "");
         customers.forEach(c -> log.info(" Customer Result: {}", c));
 
         assertThat(customers).hasSize(1);
@@ -116,7 +116,7 @@ class CustomerRepositoryTest {
         CustomerEntity customer = getCustomerEntity();
         entityManager.persist(customer);
         List<CustomerEntity> customers = customerRepository
-                .findAllByIdentificationNumberOrName(null, "Efren Galarza");
+                .findAllByIdentificationNumberOrName("", "Efren Galarza");
         customers.forEach(c -> log.info(" Customer Result: {}", c));
 
         assertThat(customers).hasSize(1);
