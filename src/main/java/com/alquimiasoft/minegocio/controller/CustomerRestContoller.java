@@ -28,8 +28,8 @@ public class CustomerRestContoller {
 
     @GetMapping("/search")
     public ResponseEntity<List<CustomerDTO>> findAllCustomersByIDNumberOrName(
-            @RequestParam(required = false, defaultValue = "") String identificationNumber,
-            @RequestParam(required = false, defaultValue = "") String name) {
+            @RequestParam(required = false) String identificationNumber,
+            @RequestParam(required = false) String name) {
         List<CustomerDTO> customerDTOS = customerService.findAllCustomerstByIdentityNumberOrName(identificationNumber, name);
 
         if (customerDTOS.isEmpty())
@@ -50,7 +50,7 @@ public class CustomerRestContoller {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ResponseMessage<Void>> deleteCustomerById(@PathVariable String id) {
+    public ResponseEntity<ResponseMessage<String>> deleteCustomerById(@PathVariable String id) {
         if (!customerService.deleteCustomerById(id))
             return notFound().build();
 
